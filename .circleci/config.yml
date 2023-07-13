@@ -65,7 +65,60 @@ jobs:
 
       - slack/notify:
           event: pass
-          template: success_tagged_deploy_1
+           custom: |
+            {
+              "attatchments": [
+                {
+                  "blocks": [
+                    {
+                      "type": "header",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "Build Successful! :tada:",
+                        "emoji": true
+                      }
+                    },
+                    {
+                      "type": "section",
+                      "fields": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Branch*: \n$CIRCLE_BRANCH"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Commit*: \n${CIRCLE_SHA1:0:10}"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Job*: \n$CIRCLE_JOB ($CIRCLE_BUILD_NUM)"
+                        }
+                      ],
+                      "accessory": {
+                        "type": "image",
+                        "image_url": "https://assets.brandfolder.com/otz5mn-bw4j2w-6jzqo8/original/circle-logo-badge-black.png",
+                        "alt_text": "CircleCI logo"
+                      }
+                    },
+                    {
+                      "type": "actions",
+                      "elements": [
+                        {
+                          "type": "button",
+                          "action_id": "success_tagged_deploy_view",
+                          "text": {
+                            "type": "plain_text",
+                            "text": "View Job"
+                          },
+                          "url": "$CIRCLE_BUILD_URL"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+            }
+
 
 workflows:
   android-build:
