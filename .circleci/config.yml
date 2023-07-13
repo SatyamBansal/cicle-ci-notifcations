@@ -65,7 +65,7 @@ jobs:
 
       - slack/notify:
           event: pass
-           custom: |
+          custom: |
             {
               "attatchments": [
                 {
